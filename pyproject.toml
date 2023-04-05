@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "flake8-docstring-sections"
+name = "mle-flake8-plugins"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -9,7 +9,8 @@ python = "^3.8"
 docstring-parser = "^0.15"
 flake8 = "^5.0.4"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
 black = "^22.8.0"
 pytest = "^7.1.3"
 
@@ -18,4 +19,5 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.plugins."flake8.extension"]
-D50 = "flake8_docstring_sections:DocstringSectionChecker"
+MLE00 = "mle_flake8_plugins.flake8_mle_docstring:MleDocstringChecker"
+MLE10 = "mle_flake8_plugins.flake8_mle_convention:MleConventionChecker"

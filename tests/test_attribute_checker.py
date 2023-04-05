@@ -1,7 +1,7 @@
 import ast
 
-from flake8_docstring_sections.attribute_checker import AttributeChecker
-from flake8_docstring_sections.errors import error_codes
+from mle_flake8_plugins.flake8_mle_docstring.attribute_checker import AttributeChecker
+from mle_flake8_plugins.flake8_mle_docstring.errors import error_codes
 
 
 def test_no_attribute_docs():

@@ -5,13 +5,12 @@ from docstring_parser import Style
 
 from .attribute_checker import AttributeChecker
 
-
 __version__ = "0.1.0"
 
 
-class DocstringSectionChecker(object):
+class MleDocstringChecker:
     options = None
-    name = "flake8-docstring-section"
+    name = "flake8-mle-docstring"
     version = __version__
 
     def __init__(self, tree, filename):

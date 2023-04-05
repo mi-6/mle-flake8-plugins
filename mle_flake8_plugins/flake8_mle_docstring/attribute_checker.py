@@ -1,6 +1,6 @@
 import ast
 
-from docstring_parser import parse, Style
+from docstring_parser import Style, parse
 
 from .errors import error_codes
 
