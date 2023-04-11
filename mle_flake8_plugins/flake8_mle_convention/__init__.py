@@ -1,6 +1,7 @@
 import ast
 
-from .type_hint_checker import TypeHintChecker
+from .legacy_type_hint_checker import LegacyTypeHintChecker
+from .two_operation_checker import TwoOperationsChecker
 
 __version__ = "0.1.0"
 
@@ -12,11 +13,13 @@ class MleConventionChecker:
         self.tree = tree
 
     def run(self):
-        parser = TypeHintChecker()
-        parser.visit(self.tree)
-        errors = parser.errors
-        errors_seen = set()
+        checkers = [LegacyTypeHintChecker(), TwoOperationsChecker()]
+        errors = []
+        for checker in checkers:
+            checker.visit(self.tree)
+            errors.extend(checker.errors)
 
+        errors_seen = set()
         for error in errors:
             if error in errors_seen:
                 continue

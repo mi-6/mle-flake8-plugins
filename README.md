@@ -30,7 +30,7 @@ class B:
 
 ### Coding convention
 
-#### MLE100 Type hint checker
+#### MLE100 Legacy type hint checker
 
 ```py
 # good
@@ -43,6 +43,19 @@ def test_modern_style(a: list, b: dict) -> tuple:
 # MLE100 Consider using 'tuple' instead of 'Tuple'
 def test_legacy_style(a: List, b: Dict) -> Tuple:
     return tuple(a + list(b.keys()))
+```
+
+#### MLE101 Two operations checker
+
+```py
+# good
+def test_2_operations(a, b):
+    return 2.0 * a + b
+
+# bad
+# MLE101 too few operations in function: found 1, minimum required is 2
+def test_1_operation(a, b):
+    return a + b
 ```
 
 ## Related tools
