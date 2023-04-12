@@ -1,5 +1,11 @@
 # mle-flake8-plugins
 
+## Installation
+
+```
+pip install mle-flake8-plugins
+```
+
 ## Support checkers
 
 ### Docstring
