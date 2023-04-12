@@ -1,7 +1,7 @@
 import ast
 
 from .legacy_type_hint_checker import LegacyTypeHintChecker
-from .two_operation_checker import TwoOperationsChecker
+from .no_operation_checker import NoOperationsChecker
 
 __version__ = "0.1.0"
 
@@ -13,7 +13,7 @@ class MleConventionChecker:
         self.tree = tree
 
     def run(self):
-        checkers = [LegacyTypeHintChecker(), TwoOperationsChecker()]
+        checkers = [LegacyTypeHintChecker(), NoOperationsChecker()]
         errors = []
         for checker in checkers:
             checker.visit(self.tree)

@@ -30,7 +30,7 @@ _OPERATIONS = (
 )
 
 
-class TwoOperationsChecker(ast.NodeVisitor):
+class NoOperationsChecker(ast.NodeVisitor):
     def __init__(self):
         self.errors = []
 
@@ -43,18 +43,12 @@ class TwoOperationsChecker(ast.NodeVisitor):
         return count
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
-        has_property_decorator = False
-        for decorator in node.decorator_list:
-            if isinstance(decorator, ast.Name) and decorator.id == "property":
-                has_property_decorator = True
-                break
-
         has_only_pass = len(node.body) == 1 and isinstance(node.body[0], ast.Pass)
 
-        if not has_property_decorator and not has_only_pass:
+        if not has_only_pass:
             operations_count = self._count_operations(node)
-            if operations_count < 2:
-                self.errors.append((node.lineno, node.col_offset, error_codes["two_operation"] % operations_count))
+            if operations_count < 1:
+                self.errors.append((node.lineno, node.col_offset, error_codes["no_operation"]))
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:

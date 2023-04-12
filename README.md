@@ -45,17 +45,17 @@ def test_legacy_style(a: List, b: Dict) -> Tuple:
     return tuple(a + list(b.keys()))
 ```
 
-#### MLE101 Two operations checker
+#### MLE101 No operation checker
 
 ```py
 # good
-def test_2_operations(a, b):
-    return 2.0 * a + b
+def test_1_operations(a, b):
+    return a + b
 
 # bad
-# MLE101 too few operations in function: found 1, minimum required is 2
-def test_1_operation(a, b):
-    return a + b
+# MLE101 No operation in function
+def test_no_operation(a, b):
+    return a
 ```
 
 ## Related tools
