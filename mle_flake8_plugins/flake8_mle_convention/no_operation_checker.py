@@ -48,7 +48,7 @@ class NoOperationsChecker(ast.NodeVisitor):
         if not has_only_pass:
             operations_count = self._count_operations(node)
             if operations_count < 1:
-                self.errors.append((node.lineno, node.col_offset, error_codes["no_operation"]))
+                self.errors.append((node.lineno, node.col_offset, error_codes["no_operation"], type(self)))
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
