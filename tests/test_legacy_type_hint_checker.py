@@ -1,7 +1,10 @@
 import ast
 
-from mle_flake8_plugins.flake8_mle_convention.legacy_type_hint_checker import LegacyTypeHintChecker
 from mle_flake8_plugins.flake8_mle_convention.errors import error_codes
+from mle_flake8_plugins.flake8_mle_convention.legacy_type_hint_checker import (
+    LegacyTypeHintChecker,
+)
+
 
 def test_use_legacy_type_hint():
     code = """
@@ -10,7 +13,7 @@ from typing import List, Dict, Tuple
 def test(a: List[int], b: Dict[str, int], c: Tuple[int, str]):
     pass
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = LegacyTypeHintChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 3

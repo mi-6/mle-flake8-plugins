@@ -15,7 +15,7 @@ class Test:
     def __init__(self):
         self.b = 1
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = AttributeChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 2
@@ -40,7 +40,7 @@ class Test:
     def __init__(self):
         self.b = 1
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = AttributeChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 0

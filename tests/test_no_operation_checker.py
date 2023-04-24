@@ -1,7 +1,10 @@
 import ast
 
-from mle_flake8_plugins.flake8_mle_convention.no_operation_checker import NoOperationsChecker
 from mle_flake8_plugins.flake8_mle_convention.errors import error_codes
+from mle_flake8_plugins.flake8_mle_convention.no_operation_checker import (
+    NoOperationsChecker,
+)
+
 
 def test_use_no_operations():
     code = """
@@ -10,7 +13,7 @@ global_var = 0
 def test():
     return global_var
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 1
@@ -19,7 +22,7 @@ def test():
 def test(a, b):
     pass
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 0
@@ -28,7 +31,7 @@ def test(a, b):
 def test(a, b):
     return a
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 1
@@ -37,7 +40,7 @@ def test(a, b):
 def test(a, b):
     return a + b
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 0
@@ -47,7 +50,7 @@ class Test:
     def test(self, a, b):
         return a
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 1
@@ -60,7 +63,7 @@ class Test:
     def test(self):
         return self.a
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 0
@@ -73,7 +76,19 @@ class Test(abc.ABC):
     def test(self, a):
         return a
 """
-    tree = ast.parse(code, '')
+    tree = ast.parse(code, "")
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 0
+
+    code = """
+from typing import Optional
+a = None
+
+def test() -> Optional[int]:
+    return a
+"""
+    tree = ast.parse(code, "")
+    visitor = NoOperationsChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 1

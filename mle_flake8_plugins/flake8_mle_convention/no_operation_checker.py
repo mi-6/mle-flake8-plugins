@@ -2,7 +2,6 @@ import ast
 
 from .errors import error_codes
 
-
 _OPERATIONS = (
     ast.Call,
     ast.Attribute,
@@ -36,12 +35,14 @@ class NoOperationsChecker(ast.NodeVisitor):
         self._class_stack = []
 
     def _count_operations(self, node: ast.AST) -> int:
-        count = 0
-        for child in ast.iter_child_nodes(node):
-            if isinstance(child, _OPERATIONS):
-                count += 1
-            count += self._count_operations(child)
-        return count
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            return sum(self._count_operations(child) for child in node.body)
+        elif isinstance(node, (ast.arguments, ast.arg, ast.expr_context, ast.keyword)):
+            return 0
+        else:
+            return int(isinstance(node, _OPERATIONS)) + sum(
+                self._count_operations(child) for child in ast.iter_child_nodes(node)
+            )
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
         has_only_pass = len(node.body) == 1 and isinstance(node.body[0], ast.Pass)
