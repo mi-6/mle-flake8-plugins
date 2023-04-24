@@ -65,10 +65,11 @@ class Test:
     visitor.visit(tree)
     assert len(visitor.errors) == 0
 
-
     code = """
 import abc
+
 class Test(abc.ABC):
+    @abc.abstractmethod
     def test(self, a):
         return a
 """
