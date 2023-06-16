@@ -1,9 +1,8 @@
 import ast
 
 from mle_flake8_plugins.flake8_mle_convention.errors import error_codes
-from mle_flake8_plugins.flake8_mle_convention.legacy_type_hint_checker import (
-    LegacyTypeHintChecker,
-)
+from mle_flake8_plugins.flake8_mle_convention.legacy_type_hint_checker import \
+    LegacyTypeHintChecker
 
 
 def test_use_legacy_type_hint():

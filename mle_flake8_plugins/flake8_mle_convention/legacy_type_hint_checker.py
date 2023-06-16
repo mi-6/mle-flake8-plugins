@@ -15,7 +15,8 @@ class LegacyTypeHintChecker(ast.NodeVisitor):
                     (
                         lineno,
                         col_offset,
-                        error_codes["legacy_type_hint"] % (hint.value.id.lower(), hint.value.id),
+                        error_codes["legacy_type_hint"]
+                        % (hint.value.id.lower(), hint.value.id),
                         type(self),
                     )
                 )

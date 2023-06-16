@@ -1,5 +1,6 @@
 import ast
 
+from .disallow_final_w_pydantic import PydanticFinalChecker
 from .legacy_type_hint_checker import LegacyTypeHintChecker
 from .no_operation_checker import NoOperationsChecker
 
@@ -13,7 +14,11 @@ class MleConventionChecker:
         self.tree = tree
 
     def run(self):
-        checkers = [LegacyTypeHintChecker(), NoOperationsChecker()]
+        checkers = [
+            LegacyTypeHintChecker(),
+            NoOperationsChecker(),
+            PydanticFinalChecker(),
+        ]
         errors = []
         for checker in checkers:
             checker.visit(self.tree)

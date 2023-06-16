@@ -1,9 +1,7 @@
 import ast
 
-from mle_flake8_plugins.flake8_mle_convention.errors import error_codes
-from mle_flake8_plugins.flake8_mle_convention.no_operation_checker import (
-    NoOperationsChecker,
-)
+from mle_flake8_plugins.flake8_mle_convention.no_operation_checker import \
+    NoOperationsChecker
 
 
 def test_use_no_operations():

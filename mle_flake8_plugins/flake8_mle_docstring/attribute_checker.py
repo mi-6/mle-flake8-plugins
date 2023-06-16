@@ -36,7 +36,13 @@ class AttributeChecker(ast.NodeVisitor):
                 and self.is_public(child.target.id)
                 and child.target.id not in doc_attrs
             ):
-                self.errors.append((node.lineno, node.col_offset, error_codes["attribute"] % child.target.id))
+                self.errors.append(
+                    (
+                        node.lineno,
+                        node.col_offset,
+                        error_codes["attribute"] % child.target.id,
+                    )
+                )
 
             # assign value in functions
             if isinstance(child, ast.FunctionDef):
@@ -49,5 +55,9 @@ class AttributeChecker(ast.NodeVisitor):
                         and gc.targets[0].attr not in doc_attrs
                     ):
                         self.errors.append(
-                            (node.lineno, node.col_offset, error_codes["attribute"] % gc.targets[0].attr)
+                            (
+                                node.lineno,
+                                node.col_offset,
+                                error_codes["attribute"] % gc.targets[0].attr,
+                            )
                         )
