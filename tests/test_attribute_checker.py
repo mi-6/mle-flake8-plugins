@@ -1,6 +1,7 @@
 import ast
 
-from mle_flake8_plugins.flake8_mle_docstring.attribute_checker import AttributeChecker
+from mle_flake8_plugins.flake8_mle_docstring.attribute_checker import \
+    AttributeChecker
 from mle_flake8_plugins.flake8_mle_docstring.errors import error_codes
 
 
