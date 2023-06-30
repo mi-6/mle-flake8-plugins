@@ -1,6 +1,5 @@
 name: Package publish
 on:
-  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
