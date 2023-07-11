@@ -90,3 +90,49 @@ def test() -> Optional[int]:
     visitor = NoOperationsChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 1
+
+    code = """
+def test(a: int, c: bool) -> int:
+    if c:
+        return -a
+    return a
+"""
+    tree = ast.parse(code, "")
+    visitor = NoOperationsChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 0
+
+    code = """
+def test(a: int, b: list[int]) -> int:
+    for i in b:
+        return i
+    return a
+"""
+    tree = ast.parse(code, "")
+    visitor = NoOperationsChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 0
+
+
+    code = """
+def test(a: int, b: int) -> int:
+    while True:
+        return b
+    return a
+"""
+    tree = ast.parse(code, "")
+    visitor = NoOperationsChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 0
+
+
+    code = """
+def test(a: int, b: int, context: object) -> int:
+    with context:
+        return a
+    return a
+"""
+    tree = ast.parse(code, "")
+    visitor = NoOperationsChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 0

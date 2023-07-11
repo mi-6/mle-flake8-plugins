@@ -23,8 +23,22 @@ class AttributeChecker(ast.NodeVisitor):
     def is_public(self, attr_name):
         return attr_name[0] != "_"
 
+    def is_enum(self, node):
+        for base in node.bases:
+            if isinstance(base, ast.Attribute):
+                if base.attr == "Enum":
+                    return True
+            elif isinstance(base, ast.Name):
+                if base.id == "Enum":
+                    return True
+        return False
+
     def visit_ClassDef(self, node):
+        # モジュール内でprivateなクラスは無視
         if not self.is_public(node.name):
+            return
+        # Enumを継承したクラスは無視
+        if self.is_enum(node):
             return
         doc_attrs = self.docstring_attribute(node)
 
@@ -51,6 +65,8 @@ class AttributeChecker(ast.NodeVisitor):
                         isinstance(gc, ast.Assign)
                         and gc.targets
                         and isinstance(gc.targets[0], ast.Attribute)
+                        and isinstance(gc.targets[0].value, ast.Name)
+                        and gc.targets[0].value.id == 'self'
                         and self.is_public(gc.targets[0].attr)
                         and gc.targets[0].attr not in doc_attrs
                     ):
