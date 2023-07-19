@@ -45,3 +45,41 @@ class Test:
     visitor = AttributeChecker()
     visitor.visit(tree)
     assert len(visitor.errors) == 0
+
+
+def test_provided_attribute_docs_with_nested_attributes():
+    code = """
+from dataclasses import dataclass
+
+@dataclass
+class Test:
+    '''Test
+
+    Attributes:
+      a: hoge
+      b: fuga
+    '''
+    a: int = 10
+
+    def __init__(self):
+        self.b = 1
+        self.b.c = 2
+"""
+    tree = ast.parse(code, "")
+    visitor = AttributeChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 0
+
+
+def test_ignore_enum_docs():
+    code = """
+from enum import Enum
+
+class Test(Enum):
+    a = 1
+    b = 2
+"""
+    tree = ast.parse(code, "")
+    visitor = AttributeChecker()
+    visitor.visit(tree)
+    assert len(visitor.errors) == 0

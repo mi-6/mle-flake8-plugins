@@ -26,6 +26,10 @@ _OPERATIONS = (
     ast.LtE,
     ast.Gt,
     ast.GtE,
+    ast.If,
+    ast.For,
+    ast.While,
+    ast.With,
 )
 
 
